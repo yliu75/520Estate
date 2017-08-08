@@ -1,8 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#3F51B5</color>
-    <color name="colorPrimaryDark">#303F9F</color>
+    <color name="colorPrimary">#02c3d3</color>
+    <color name="colorPrimaryDark">#00acd8</color>
     <color name="colorAccent">#FF4081</color>
-    <color name="buttomTabTint">#cccccc</color>
+    <color name="buttomTabTint">#f4f4f4</color>
+    <color name="cardViewBackground">#b0d8e2</color>
+    <color name="cardBackground">#fefefc</color>
+    <color name="cardViewTitleText">#727271</color>
+    <color name="priceColor">#ff6462</color>
 
 </resources>
