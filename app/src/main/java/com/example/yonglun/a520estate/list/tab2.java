@@ -91,7 +91,7 @@ public class tab2 extends Fragment {
 
         }
 
-        mHouseListAdapter = new RecyclerAdapter(getActivity(),list);
+        mHouseListAdapter = new RecyclerAdapter(getActivity(),list,0);
         //View rootView = inflater.inflate(R.layout.fragment_tab2,container);
         RecyclerView RV=(RecyclerView)getActivity().findViewById(R.id.house_list_view);
         RV.setLayoutManager(new LinearLayoutManager(getContext()));

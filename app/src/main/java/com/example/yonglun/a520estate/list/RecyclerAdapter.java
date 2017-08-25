@@ -49,13 +49,15 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.InfoHo
             return VALUES.get(RANDOM.nextInt(SIZE));
         }
     }
-    //private ArrayList<IDNA.Info> mInfos;
+
     private ArrayList<HouseInfo> houseInfoList;
     private Context mContext;
+    private int mParameter;
 
-    public RecyclerAdapter(Context context, ArrayList<HouseInfo> infos) {
+    public RecyclerAdapter(Context context, ArrayList<HouseInfo> infos,int para) {
         mContext=context;
         houseInfoList = infos;
+        mParameter=para;
     }
 
 
@@ -96,10 +98,20 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.InfoHo
             @Override
             public void onClick(View view) {
                 Toast.makeText(view.getContext(), "Recycle Click" + position, Toast.LENGTH_SHORT).show();
-                Intent intent = new Intent(mContext,HouseInfoDetailActivity.class);
-                intent.putExtra("position",position);
-                intent.putExtra("header",info.getThumbnail());
-                ((Activity)mContext).startActivityForResult(intent,1);
+                if (mParameter==0){
+                    Intent intent = new Intent(mContext,HouseInfoDetailActivity.class);
+                    intent.putExtra("position",position);
+                    intent.putExtra("header",info.getThumbnail());
+                    ((Activity)mContext).startActivityForResult(intent,1);
+                }else{
+                    if (mParameter==1){
+                        Intent intent = new Intent(mContext,HouseDetailContactActivity.class);
+                        intent.putExtra("position",position);
+                        intent.putExtra("header",info.getThumbnail());
+                        ((Activity)mContext).startActivityForResult(intent,1);
+                    }
+                }
+
                 //mContext.startActivity(intent);
             }
         });

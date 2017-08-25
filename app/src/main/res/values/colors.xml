@@ -8,5 +8,6 @@
     <color name="cardBackground">#fefefc</color>
     <color name="cardViewTitleText">#727271</color>
     <color name="priceColor">#ff6462</color>
+    <color name="white">#ffffff</color>
 
 </resources>
