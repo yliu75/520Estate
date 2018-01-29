@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="108dp"
+    android:background="@color/cardBackground"
+
+    >
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1px"
+        android:background="@color/cardViewTitleText"
+        android:layout_marginLeft="6dp"
+        android:layout_marginStart="6dp">
+
+    </View>
+    <ImageView
+        android:id="@+id/thumbnail"
+        android:layout_width="108dp"
+        android:layout_height="96dp"
+        android:layout_margin="6dp"
+        android:layout_alignParentTop="true"
+        android:scaleType="centerCrop"
+        android:src="@drawable/placeholder"
+        android:contentDescription="@string/thumbnail" />
+
+    <TextView
+        android:id="@+id/title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_toEndOf="@+id/thumbnail"
+        android:layout_toRightOf="@+id/thumbnail"
+        android:layout_marginTop="6dp"
+        android:layout_marginLeft="6dp"
+        android:layout_marginBottom="6dp"
+        android:maxLines="2"
+        android:padding="0dp"
+        android:textAppearance="@style/TextAppearance.AppCompat.Headline"
+        android:textColor="#444"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        android:text="@string/placeholder"
+        android:layout_marginStart="6dp" />
+
+    <TextView
+        android:id="@+id/area"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/type"
+        android:layout_above="@+id/type"
+        android:text="@string/exampleText"
+        android:layout_alignStart="@+id/type" />
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+
+        android:id="@+id/type"
+        android:text="@string/exampleType"
+        android:layout_alignBottom="@+id/thumbnail"
+        android:layout_alignLeft="@+id/title"
+        android:layout_marginLeft="0dp"
+        android:layout_marginBottom="0dp"
+        android:layout_alignStart="@+id/title"
+        android:layout_marginStart="0dp" />
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/exampleLarge"
+        android:layout_toRightOf="@+id/type"
+        android:layout_marginLeft="6dp"
+        android:layout_alignBottom="@+id/thumbnail"
+        android:id="@+id/acreage"
+        android:layout_toEndOf="@+id/type"
+        android:layout_marginStart="6dp" />
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignTop="@+id/title"
+        android:layout_alignRight="@+id/title"
+        android:text="@string/examplePrice"
+        android:layout_marginRight="6dp"
+        android:layout_marginTop="70dp"
+        android:textColor="@color/priceColor"
+        android:textSize="20sp"
+        android:id="@+id/price"
+        android:textStyle="bold"
+        android:layout_alignEnd="@+id/title"
+        android:layout_marginEnd="6dp" />
+
+</RelativeLayout>

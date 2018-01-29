@@ -26,4 +26,6 @@
         app:itemIconTint="@color/buttomTabTint"
         app:itemTextColor="@color/buttomTabTint"
         app:menu="@menu/buttom_tab"/>
+
+
 </RelativeLayout>

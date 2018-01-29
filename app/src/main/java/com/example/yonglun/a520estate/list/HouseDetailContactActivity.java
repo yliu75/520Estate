@@ -5,7 +5,12 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.Uri;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentStatePagerAdapter;
 import android.support.v4.app.NavUtils;
+import android.support.v4.view.PagerAdapter;
+import android.support.v4.view.ViewPager;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -20,6 +25,8 @@ import android.widget.Toast;
 
 import com.example.yonglun.a520estate.R;
 import com.example.yonglun.a520estate.Utility.MapActivity;
+import com.example.yonglun.a520estate.home.HomeCarouselFragment;
+import com.example.yonglun.a520estate.home.HomeSlidePagerActivity;
 import com.google.android.gms.appindexing.Action;
 import com.google.android.gms.appindexing.AppIndex;
 import com.google.android.gms.appindexing.Thing;
@@ -31,6 +38,8 @@ import me.imid.swipebacklayout.lib.app.SwipeBackActivity;
 
 //public class HouseInfoDetailActivity extends AppCompatActivity  {
 public class HouseDetailContactActivity extends SwipeBackActivity {
+
+
     private ImageView mHeader;
     private TextView mPosition;
     private Toolbar mToolBar;
@@ -39,6 +48,9 @@ public class HouseDetailContactActivity extends SwipeBackActivity {
     private Activity mAct;
     private SwipeBackLayout mSwipeBackLayout;
     //private Context mContext;
+
+
+
     /**
      * ATTENTION: This was auto-generated to implement the App Indexing API.
      * See https://g.co/AppIndexing/AndroidStudio for more information.
@@ -98,7 +110,11 @@ public class HouseDetailContactActivity extends SwipeBackActivity {
                 //mContext.startActivity(intent);
             }
         });
+
+
     }
+
+
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {

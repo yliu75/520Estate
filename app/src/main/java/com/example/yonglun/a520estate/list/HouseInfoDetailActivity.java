@@ -5,12 +5,19 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.Uri;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentStatePagerAdapter;
 import android.support.v4.app.NavUtils;
+import android.support.v4.view.PagerAdapter;
+import android.support.v4.view.ViewPager;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
+import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
@@ -20,6 +27,7 @@ import android.widget.Toast;
 
 import com.example.yonglun.a520estate.R;
 import com.example.yonglun.a520estate.Utility.MapActivity;
+import com.example.yonglun.a520estate.home.HomeCarouselFragment;
 
 
 import me.imid.swipebacklayout.lib.SwipeBackLayout;
@@ -27,7 +35,11 @@ import me.imid.swipebacklayout.lib.app.SwipeBackActivity;
 
 //public class HouseInfoDetailActivity extends AppCompatActivity  {
 public class HouseInfoDetailActivity extends SwipeBackActivity {
-    private ImageView mHeader;
+
+    private static final int NUM_PAGES = 5;
+
+
+    private ImageView mMap;
     private TextView mPosition;
     private Toolbar mToolBar;
     private Button mBackButton;
@@ -36,12 +48,14 @@ public class HouseInfoDetailActivity extends SwipeBackActivity {
     private SwipeBackLayout mSwipeBackLayout;
     //private Context mContext;
 
+    private ViewPager mPager;
+    private PagerAdapter mPagerAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_house_info_detail);
-        mHeader = (ImageView) findViewById(R.id.header);
+        mMap = (ImageView) findViewById(R.id.map);
 //        mPosition = (TextView) findViewById(R.id.position);
         mToolBar = (Toolbar) findViewById(R.id.toolbar);
         mChooseButton = (Button) findViewById(R.id.choose_btn);
@@ -94,7 +108,7 @@ public class HouseInfoDetailActivity extends SwipeBackActivity {
         // See https://g.co/AppIndexing/AndroidStudio for more information.
 
 
-        mHeader.setOnClickListener(new View.OnClickListener() {
+        mMap.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 //Toast.makeText(view.getContext(), "Recycle Click" + position, Toast.LENGTH_SHORT).show();
@@ -105,6 +119,35 @@ public class HouseInfoDetailActivity extends SwipeBackActivity {
                 //mContext.startActivity(intent);
             }
         });
+        mPager = (ViewPager) findViewById(R.id.house_info_detail_viewPager);
+        mPagerAdapter = new ScreenSlidePagerAdapter(getSupportFragmentManager());
+        mPager.setAdapter(mPagerAdapter);
+    }
+
+    /**
+     * A simple pager adapter that represents 5 ScreenSlidePageFragment objects, in
+     * sequence.
+     */
+    private class ScreenSlidePagerAdapter extends FragmentStatePagerAdapter {
+        public ScreenSlidePagerAdapter(FragmentManager fm) {
+            super(fm);
+        }
+
+
+
+
+        @Override
+        public Fragment getItem(int position) {
+
+            Log.d("debug",String.valueOf(position));
+            return DetailCarouselFragment.create(position);
+        }
+
+
+        @Override
+        public int getCount() {
+            return NUM_PAGES;
+        }
     }
 
     @Override

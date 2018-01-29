@@ -10,9 +10,10 @@
 
     <ImageView
         android:id="@+id/fake_profile"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_centerInParent="true"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+
+        android:layout_centerInParent="false"
         android:src="@drawable/fake_profile"/>
 
     <!--<TextView-->

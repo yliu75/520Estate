@@ -9,5 +9,11 @@
     <color name="cardViewTitleText">#727271</color>
     <color name="priceColor">#ff6462</color>
     <color name="white">#ffffff</color>
+    <color name="grey">#bbbbbb</color>
+    <color name="darkGrey">#888888</color>
+    <color name="lightGrey">#dddddd</color>
+    <color name="DarkText">#1a1a1a</color>
+
+
 
 </resources>

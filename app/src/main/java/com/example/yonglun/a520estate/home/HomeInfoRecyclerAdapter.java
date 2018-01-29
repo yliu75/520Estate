@@ -1,11 +1,9 @@
-package com.example.yonglun.a520estate.list;
+package com.example.yonglun.a520estate.home;
 
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
-import android.icu.text.IDNA;
 import android.support.v7.widget.RecyclerView;
-import android.text.Html;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -16,11 +14,12 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.yonglun.a520estate.R;
-import com.example.yonglun.a520estate.main.MainActivity;
+import com.example.yonglun.a520estate.list.HouseDetailContactActivity;
+import com.example.yonglun.a520estate.list.HouseInfoDetailActivity;
+//import com.example.yonglun.a520estate.list.RecyclerAdapter;
+import com.example.yonglun.a520estate.list.RecyclerAdapter;
 import com.example.yonglun.a520estate.models.HouseInfo;
 import com.squareup.picasso.Picasso;
-
-import org.w3c.dom.Text;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -28,49 +27,40 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Random;
 
-import static android.text.Html.fromHtml;
-
 /**
- * Created by Yonglun on 2017/6/20/0020.
+ * Created by yliu7 on 2017/11/1 0001.
  */
 
-public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.InfoHolder> {
+public class HomeInfoRecyclerAdapter extends RecyclerView.Adapter<HomeInfoRecyclerAdapter.InfoHolder> {
+
 
     enum Area
     {
         新北区, 钟楼区, 天宁区, 戚区, 武进区, 金坛区, 溧阳区;
 
-        private static final List<Area> VALUES =
+        private static final List<HomeInfoRecyclerAdapter.Area> VALUES =
                 Collections.unmodifiableList(Arrays.asList(values()));
         private static final int SIZE = VALUES.size();
         private static final Random RANDOM = new Random();
 
-        public static Area randomArea()  {
+        public static HomeInfoRecyclerAdapter.Area randomArea()  {
             return VALUES.get(RANDOM.nextInt(SIZE));
         }
     }
-
     private ArrayList<HouseInfo> houseInfoList;
     private Context mContext;
     private int mParameter;
 
-    public RecyclerAdapter(Context context, ArrayList<HouseInfo> infos,int para) {
+    public HomeInfoRecyclerAdapter(Context context, ArrayList<HouseInfo> infos,int para) {
         mContext=context;
         houseInfoList = infos;
         mParameter=para;
     }
 
 
-//    @Override
-//    public InfoHolder onCreateViewHolder(ViewGroup viewGroup, int i) {
-//        View view = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout, null);
-//        //CustomViewHolder viewHolder = new CustomViewHolder(view);
-//        return viewHolder;
-//    }
-
     @Override
     public InfoHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.house_list_item, null);
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.home_info_item, null);
         InfoHolder holder = new InfoHolder(view);
         return holder;
     }
@@ -79,18 +69,18 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.InfoHo
     public void onBindViewHolder(final InfoHolder holder, final int position) {
         holder.setIsRecyclable(false);
         final HouseInfo info = houseInfoList.get(position);
-        InfoHolder.textView.setText(info.getTitle());
-        InfoHolder.position=position;
-        InfoHolder.mPrice.setText(String.valueOf(new Random().nextInt(13)+10)+"00元/月");
-        InfoHolder.mArea.setText("常州-"+Area.randomArea().toString());
+        HomeInfoRecyclerAdapter.InfoHolder.textView.setText(info.getTitle());
+        HomeInfoRecyclerAdapter.InfoHolder.position=position;
+        HomeInfoRecyclerAdapter.InfoHolder.mPrice.setText(String.valueOf(new Random().nextInt(13)+10)+"00元/月");
+        HomeInfoRecyclerAdapter.InfoHolder.mArea.setText("常州-"+ HomeInfoRecyclerAdapter.Area.randomArea().toString());
         int lower = new Random().nextInt(12)+5;
-        InfoHolder.mAcreage.setText(lower+"0-"+String.valueOf(lower+2)+"0平米");
+        HomeInfoRecyclerAdapter.InfoHolder.mAcreage.setText(lower+"0-"+String.valueOf(lower+2)+"0平米");
 
         if (!TextUtils.isEmpty(info.getThumbnail())) {
             Picasso.with(mContext).load(info.getThumbnail())
                     .error(R.drawable.placeholder)
                     .placeholder(R.drawable.placeholder)
-                    .into(InfoHolder.itemImage);
+                    .into(HomeInfoRecyclerAdapter.InfoHolder.itemImage);
         }
 
 
@@ -119,16 +109,13 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.InfoHo
         Log.d(String.valueOf(holder.getAdapterPosition()),"onBindViewHolder: ");
     }
 
-
-
-
     @Override
     public int getItemCount() {
         return (null != houseInfoList ? houseInfoList.size() : 0);
     }
 
 
-    //1
+
     public static class InfoHolder extends RecyclerView.ViewHolder {
         //2
         private ImageView mItemImage;
@@ -161,7 +148,6 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.InfoHo
             //v.setOnClickListener(this);
         }
 
-
         //5
 //        @Override
 //        public void onClick(View v) {
@@ -169,4 +155,3 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.InfoHo
 //        }
     }
 }
-

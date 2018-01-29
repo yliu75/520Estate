@@ -1,21 +1,35 @@
 package com.example.yonglun.a520estate.home;
 
+import android.animation.ArgbEvaluator;
+import android.animation.ObjectAnimator;
+import android.animation.ValueAnimator;
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Intent;
+import android.graphics.drawable.TransitionDrawable;
+import android.os.Build;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.annotation.RequiresApi;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
+import android.support.v4.app.NotificationCompat;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.ScrollView;
 import android.widget.TextView;
 
 import com.android.volley.AuthFailureError;
@@ -29,13 +43,24 @@ import com.autonavi.ae.gmap.gesture.EAMapPlatformGestureInfo;
 import com.example.yonglun.a520estate.R;
 import com.example.yonglun.a520estate.list.HouseDetailContactActivity;
 import com.example.yonglun.a520estate.list.HouseInfoDetailActivity;
+import com.example.yonglun.a520estate.list.RecyclerAdapter;
+import com.example.yonglun.a520estate.models.HouseInfo;
 import com.example.yonglun.a520estate.profile.ContactListActivity;
 
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Iterator;
+import java.util.List;
+import java.util.ListIterator;
+import java.util.Random;
 
 import static android.R.attr.button;
+import static android.R.attr.drawable;
+import static android.R.attr.imageButtonStyle;
 import static android.support.v4.app.ActivityCompat.invalidateOptionsMenu;
+import static android.support.v4.content.ContextCompat.getColor;
 
 
 public class home extends Fragment {
@@ -54,16 +79,32 @@ public class home extends Fragment {
      * and next wizard steps.
      */
     private ViewPager mPager;
+    private boolean touchGreyFlag=false;
+//    private float touchGreyX=0;
+//    private float touchGreyY=0;
 
     private PagerAdapter mPagerAdapter;
+    private HomeInfoRecyclerAdapter mHomeInfoListAdapter;
+    private ScrollView mHomeScrollView;
 
     public static home newInstance() {
         home fragment = new home();
         return fragment;
     }
+    private Activity mAct;
     private Button publishBtn;
     //private TextView accessTokenTV;
     private ImageView mFakeHome;
+    private ImageButton homeIcon0;
+    private ImageButton homeIcon1;
+    private ImageButton homeIcon2;
+    private ImageButton homeIcon3;
+    private ImageButton homeIcon4;
+    private ImageButton homeIcon5;
+    private ImageButton homeIcon6;
+    private ImageButton homeIcon7;
+
+    private ArrayList<ImageButton> homeIconList;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -71,14 +112,123 @@ public class home extends Fragment {
 
     }
 
+    @SuppressLint("ClickableViewAccessibility")
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        mAct=getActivity();
+        homeIconList=new ArrayList<>();
 
 
         mPager = (ViewPager)getActivity().findViewById(R.id.pager);
+        mHomeScrollView =(ScrollView) getActivity().findViewById(R.id.home_scroll_view);
         mPagerAdapter = new ScreenSlidePagerAdapter(getFragmentManager());
         mPager.setAdapter(mPagerAdapter);
+        homeIcon0 = (ImageButton)getActivity().findViewById(R.id.homeIcon0);
+        homeIcon1 = (ImageButton)getActivity().findViewById(R.id.homeIcon1);
+        homeIcon2 = (ImageButton)getActivity().findViewById(R.id.homeIcon2);
+        homeIcon3 = (ImageButton)getActivity().findViewById(R.id.homeIcon3);
+        homeIcon4 = (ImageButton)getActivity().findViewById(R.id.homeIcon4);
+        homeIcon5 = (ImageButton)getActivity().findViewById(R.id.homeIcon5);
+        homeIcon6 = (ImageButton)getActivity().findViewById(R.id.homeIcon6);
+        homeIcon7 = (ImageButton)getActivity().findViewById(R.id.homeIcon7);
+
+
+        homeIconList.add(homeIcon0);
+        homeIconList.add(homeIcon1);
+        homeIconList.add(homeIcon2);
+        homeIconList.add(homeIcon3);
+        homeIconList.add(homeIcon4);
+        homeIconList.add(homeIcon5);
+        homeIconList.add(homeIcon6);
+        homeIconList.add(homeIcon7);
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            mHomeScrollView.setOnScrollChangeListener(new ScrollView.OnScrollChangeListener(){
+
+                @Override
+                public void onScrollChange(View v, int scrollX, int scrollY, int oldScrollX, int oldScrollY) {
+                    for (final ImageButton item: homeIconList) {
+                        item.setBackgroundColor(getColor(mAct,R.color.white));
+
+                    }
+                }
+            });
+        }
+
+        for (final ImageButton item: homeIconList) {
+            item.setOnTouchListener(new View.OnTouchListener() {
+
+
+                @Override
+                public boolean onTouch(View v, MotionEvent event) {
+                    if (event.getAction() == MotionEvent.ACTION_DOWN){
+                        item.setBackgroundColor(getColor(mAct,R.color.lightGrey));
+                        touchGreyFlag=true;
+//                        touchGreyX=event.getX();
+//                        touchGreyY=event.getY();
+                    }
+
+                    if (event.getAction() == MotionEvent.ACTION_UP){
+                        //
+                        // item.setBackgroundColor(getColor(mAct,R.color.white));
+
+                        if (touchGreyFlag){
+                            touchGreyFlag=false;
+
+
+                            int colorFrom = getColor(mAct,R.color.lightGrey);
+                            int colorTo = getColor(mAct,R.color.white);
+                            ValueAnimator colorAnimation = ValueAnimator.ofObject(new ArgbEvaluator(), colorFrom, colorTo);
+                            colorAnimation.setDuration(150); // milliseconds
+
+                            colorAnimation.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
+
+                                @Override
+                                public void onAnimationUpdate(ValueAnimator animator) {
+                                    item.setBackgroundColor((int) animator.getAnimatedValue());
+                                }
+
+                            });
+                            colorAnimation.start();
+                        }
+
+                    }
+
+                    return false;
+                }
+            });
+
+
+
+            ArrayList<HouseInfo> list=new ArrayList<>();
+            list.add(new HouseInfo("房源 1房源 1房源 1房源 1房源 1房源 1房源 1房源 1房源 1房源 1房源 1房源 1房源 1房源 1房源 1房源 1房源 1房源 1房源 1房源 1","http://utility.oss-cn-shanghai.aliyuncs.com/tengrun/dev/img/sample_rooms/room_1.jpg"));
+            list.add(new HouseInfo("房源 2","http://utility.oss-cn-shanghai.aliyuncs.com/tengrun/dev/img/sample_rooms/room_2.jpg"));
+            list.add(new HouseInfo("房源 3","http://utility.oss-cn-shanghai.aliyuncs.com/tengrun/dev/img/sample_rooms/room_3.jpg"));
+            list.add(new HouseInfo("房源 4","http://utility.oss-cn-shanghai.aliyuncs.com/tengrun/dev/img/sample_rooms/room_4.jpg"));
+            list.add(new HouseInfo("房源 5","http://utility.oss-cn-shanghai.aliyuncs.com/tengrun/dev/img/sample_rooms/room_5.jpg"));
+            list.add(new HouseInfo("房源 6","http://utility.oss-cn-shanghai.aliyuncs.com/tengrun/dev/img/sample_rooms/room_6.jpg"));
+            list.add(new HouseInfo("房源 7","http://utility.oss-cn-shanghai.aliyuncs.com/tengrun/dev/img/sample_rooms/room_7.jpg"));
+            list.add(new HouseInfo("房源 8","http://utility.oss-cn-shanghai.aliyuncs.com/tengrun/dev/img/sample_rooms/room_8.jpg"));
+            for (int i = 9; i < 100; i++) {
+                list.add(new HouseInfo("房源 "+String.valueOf(i),"http://utility.oss-cn-shanghai.aliyuncs.com/tengrun/dev/img/sample_rooms/room_"+String.valueOf(new Random().nextInt(8)+1)+".jpg"));
+
+            }
+            mHomeInfoListAdapter = new HomeInfoRecyclerAdapter(getActivity(),list,0);
+
+            RecyclerView RV=(RecyclerView)getActivity().findViewById(R.id.homeinfo_recyclerView);
+            RV.setLayoutManager(new LinearLayoutManager(getContext()));
+
+            RV.setAdapter(mHomeInfoListAdapter);
+            RV.setNestedScrollingEnabled(false);
+            mHomeScrollView.scrollTo(0,0);
+
+        }
+
+
+
+
+
 
 
 //        mPager.setOnPageChangeListener(new ViewPager.SimpleOnPageChangeListener() {
@@ -163,7 +313,7 @@ public class home extends Fragment {
 
 
     private class ScreenSlidePagerAdapter extends FragmentStatePagerAdapter {
-        public ScreenSlidePagerAdapter(FragmentManager fm) {
+        ScreenSlidePagerAdapter(FragmentManager fm) {
             super(fm);
         }
 

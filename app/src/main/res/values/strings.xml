@@ -11,5 +11,13 @@
     <string name="item_3">个人</string>
     <string name="map_apikey">faef3d5966e0feff24a1a2c317016da4</string>
     <string name="title_activity_home_slide_pager">HomeSlidePagerActivity</string>
+    <string name="title_activity_maps">Map</string>
+    <string name="placeholder">Placeholder</string>
+    <string name="thumbnail">thumbnail</string>
+    <string name="exampleText">常州-新北区</string>
+    <string name="exampleType">住宅</string>
+    <string name="examplePrice">2100元/月</string>
+    <string name="exampleLarge">70-100平米</string>
+    <string name="buycontact">购买联系人信息</string>
 
 </resources>
