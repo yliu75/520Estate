@@ -13,6 +13,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.yonglun.a520estate.R;
+import com.squareup.picasso.MemoryPolicy;
 import com.squareup.picasso.Picasso;
 
 import org.w3c.dom.Text;
@@ -102,6 +103,7 @@ public class DetailCarouselFragment extends Fragment {
         }
         Picasso.with(getContext()).load("https://dummyimage.com/1600x1200/000/fff.png&text="+String.valueOf(pageNum+1))
                 .error(R.drawable.placeholder)
+                .memoryPolicy(MemoryPolicy.NO_CACHE)
                 .placeholder(R.drawable.placeholder)
                 .into(mImage);
         return rootView;

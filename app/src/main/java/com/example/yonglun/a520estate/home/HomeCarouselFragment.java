@@ -3,13 +3,16 @@ package com.example.yonglun.a520estate.home;
 import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.ScrollView;
 
 import com.example.yonglun.a520estate.R;
+import com.squareup.picasso.MemoryPolicy;
 import com.squareup.picasso.Picasso;
 
 
@@ -22,6 +25,7 @@ public class HomeCarouselFragment extends Fragment {
     private int pageNum;
 
     ImageView mImage;
+    ScrollView mScrollView;
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
@@ -60,6 +64,8 @@ public class HomeCarouselFragment extends Fragment {
                 R.layout.fragment_home_carousel, container, false);
 
         mImage=(ImageView)rootView.findViewById(R.id.HomeCarouselImage);
+        //mScrollView=(ScrollView)rootView.findViewById(R.id.home_scroll_view);
+        //mScrollView.scrollTo(0,0);
         //可能由于资源的回收利用，如果这里不重新获取资源状态，在进入这个界面的时候会出现两个第一张。
         if (getArguments() != null) {
             mParam1 = getArguments().getString(ARG_PARAM1);
@@ -68,9 +74,24 @@ public class HomeCarouselFragment extends Fragment {
         }
         Picasso.with(getContext()).load("https://dummyimage.com/1600x900/000/fff.png&text="+String.valueOf(pageNum+1))
                 .error(R.drawable.placeholder)
+                .memoryPolicy(MemoryPolicy.NO_CACHE)
                 .placeholder(R.drawable.placeholder)
                 .into(mImage);
         return rootView;
+    }
+
+    @Override
+    public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
+        mScrollView=(ScrollView)getActivity().findViewById(R.id.home_scroll_view);
+        mScrollView.post(new Runnable() {
+            public void run() {
+                mScrollView.scrollTo(0, 0);
+            }
+        });
+        //mScrollView.scrollTo(0,0);
+        super.onViewCreated(view, savedInstanceState);
+
+
     }
 
     // TODO: Rename method, update argument and hook method into UI event

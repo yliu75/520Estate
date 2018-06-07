@@ -19,6 +19,10 @@ import com.example.yonglun.a520estate.list.HouseInfoDetailActivity;
 //import com.example.yonglun.a520estate.list.RecyclerAdapter;
 import com.example.yonglun.a520estate.list.RecyclerAdapter;
 import com.example.yonglun.a520estate.models.HouseInfo;
+import com.squareup.picasso.Cache;
+import com.squareup.picasso.LruCache;
+import com.squareup.picasso.MemoryPolicy;
+import com.squareup.picasso.OkHttpDownloader;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
@@ -51,11 +55,16 @@ public class HomeInfoRecyclerAdapter extends RecyclerView.Adapter<HomeInfoRecycl
     private Context mContext;
     private int mParameter;
 
+
     public HomeInfoRecyclerAdapter(Context context, ArrayList<HouseInfo> infos,int para) {
         mContext=context;
         houseInfoList = infos;
         mParameter=para;
+
     }
+
+
+
 
 
     @Override
@@ -78,6 +87,7 @@ public class HomeInfoRecyclerAdapter extends RecyclerView.Adapter<HomeInfoRecycl
 
         if (!TextUtils.isEmpty(info.getThumbnail())) {
             Picasso.with(mContext).load(info.getThumbnail())
+                    .memoryPolicy(MemoryPolicy.NO_CACHE)
                     .error(R.drawable.placeholder)
                     .placeholder(R.drawable.placeholder)
                     .into(HomeInfoRecyclerAdapter.InfoHolder.itemImage);
@@ -153,5 +163,10 @@ public class HomeInfoRecyclerAdapter extends RecyclerView.Adapter<HomeInfoRecycl
 //        public void onClick(View v) {
 //            Log.d("RecyclerView", textView.getText()+" CLICK!");
 //        }
+
+
+
+
+
     }
 }

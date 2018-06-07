@@ -34,7 +34,7 @@ public class ContactListActivity extends SwipeBackActivity {
         //getActionBar().setDisplayHomeAsUpEnabled(false);
 
         ArrayList<HouseInfo> list=new ArrayList<>();
-        list.add(new HouseInfo("房源 1","http://utility.oss-cn-shanghai.aliyuncs.com/tengrun/dev/img/sample_rooms/room_1.jpg"));
+        list.add(new HouseInfo("房源 1","http://utility.oss-cn-shanghai.aliyuncs.com/tengrun/dev/img/sample_rooms/room_1.jpg",1));
 
         mContactHouseListAdapter = new RecyclerAdapter(this,list,1);
         RecyclerView RV=(RecyclerView)findViewById(R.id.house_list_view);

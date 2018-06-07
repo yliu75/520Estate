@@ -9,13 +9,15 @@ import java.lang.reflect.Constructor;
 public class HouseInfo {
     private String title;
     private String thumbnail;
+    private int id;
     public HouseInfo(String t){
         title=t;
     }
 
-    public HouseInfo(String t,String url){
+    public HouseInfo(String t,String url,int id){
         thumbnail=url;
         title=t;
+        this.id=id;
 
     }
     public String getTitle() {

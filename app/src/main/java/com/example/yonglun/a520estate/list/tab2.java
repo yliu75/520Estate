@@ -78,16 +78,17 @@ public class tab2 extends Fragment {
 //        List<String> fakeData=new ArrayList<String>(Arrays.asList(fakedata));
 
         ArrayList<HouseInfo> list=new ArrayList<>();
-        list.add(new HouseInfo("房源 1","http://utility.oss-cn-shanghai.aliyuncs.com/tengrun/dev/img/sample_rooms/room_1.jpg"));
-        list.add(new HouseInfo("房源 2","http://utility.oss-cn-shanghai.aliyuncs.com/tengrun/dev/img/sample_rooms/room_2.jpg"));
-        list.add(new HouseInfo("房源 3","http://utility.oss-cn-shanghai.aliyuncs.com/tengrun/dev/img/sample_rooms/room_3.jpg"));
-        list.add(new HouseInfo("房源 4","http://utility.oss-cn-shanghai.aliyuncs.com/tengrun/dev/img/sample_rooms/room_4.jpg"));
-        list.add(new HouseInfo("房源 5","http://utility.oss-cn-shanghai.aliyuncs.com/tengrun/dev/img/sample_rooms/room_5.jpg"));
-        list.add(new HouseInfo("房源 6","http://utility.oss-cn-shanghai.aliyuncs.com/tengrun/dev/img/sample_rooms/room_6.jpg"));
-        list.add(new HouseInfo("房源 7","http://utility.oss-cn-shanghai.aliyuncs.com/tengrun/dev/img/sample_rooms/room_7.jpg"));
-        list.add(new HouseInfo("房源 8","http://utility.oss-cn-shanghai.aliyuncs.com/tengrun/dev/img/sample_rooms/room_8.jpg"));
+        list.add(new HouseInfo("房源 1","http://utility.oss-cn-shanghai.aliyuncs.com/tengrun/dev/img/sample_rooms/room_1.jpg",1));
+        list.add(new HouseInfo("房源 2","http://utility.oss-cn-shanghai.aliyuncs.com/tengrun/dev/img/sample_rooms/room_2.jpg",2));
+        list.add(new HouseInfo("房源 3","http://utility.oss-cn-shanghai.aliyuncs.com/tengrun/dev/img/sample_rooms/room_3.jpg",3));
+        list.add(new HouseInfo("房源 4","http://utility.oss-cn-shanghai.aliyuncs.com/tengrun/dev/img/sample_rooms/room_4.jpg",4));
+        list.add(new HouseInfo("房源 5","http://utility.oss-cn-shanghai.aliyuncs.com/tengrun/dev/img/sample_rooms/room_5.jpg",5));
+        list.add(new HouseInfo("房源 6","http://utility.oss-cn-shanghai.aliyuncs.com/tengrun/dev/img/sample_rooms/room_6.jpg",6));
+        list.add(new HouseInfo("房源 7","http://utility.oss-cn-shanghai.aliyuncs.com/tengrun/dev/img/sample_rooms/room_7.jpg",7));
+        list.add(new HouseInfo("房源 8","http://utility.oss-cn-shanghai.aliyuncs.com/tengrun/dev/img/sample_rooms/room_8.jpg",8));
         for (int i = 9; i < 100; i++) {
-            list.add(new HouseInfo("房源 "+String.valueOf(i),"http://utility.oss-cn-shanghai.aliyuncs.com/tengrun/dev/img/sample_rooms/room_"+String.valueOf(new Random().nextInt(8)+1)+".jpg"));
+            int random = new Random().nextInt(8)+1;
+            list.add(new HouseInfo("房源 "+String.valueOf(i),"http://utility.oss-cn-shanghai.aliyuncs.com/tengrun/dev/img/sample_rooms/room_"+String.valueOf(random)+".jpg",random));
 
         }
 

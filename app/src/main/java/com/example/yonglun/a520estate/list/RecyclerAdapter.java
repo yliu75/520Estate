@@ -18,6 +18,7 @@ import android.widget.Toast;
 import com.example.yonglun.a520estate.R;
 import com.example.yonglun.a520estate.main.MainActivity;
 import com.example.yonglun.a520estate.models.HouseInfo;
+import com.squareup.picasso.MemoryPolicy;
 import com.squareup.picasso.Picasso;
 
 import org.w3c.dom.Text;
@@ -88,6 +89,7 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.InfoHo
 
         if (!TextUtils.isEmpty(info.getThumbnail())) {
             Picasso.with(mContext).load(info.getThumbnail())
+                    .memoryPolicy(MemoryPolicy.NO_CACHE)
                     .error(R.drawable.placeholder)
                     .placeholder(R.drawable.placeholder)
                     .into(InfoHolder.itemImage);

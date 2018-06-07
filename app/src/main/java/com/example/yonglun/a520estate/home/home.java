@@ -128,20 +128,14 @@ public class home extends Fragment {
         homeIcon1 = (ImageButton)getActivity().findViewById(R.id.homeIcon1);
         homeIcon2 = (ImageButton)getActivity().findViewById(R.id.homeIcon2);
         homeIcon3 = (ImageButton)getActivity().findViewById(R.id.homeIcon3);
-        homeIcon4 = (ImageButton)getActivity().findViewById(R.id.homeIcon4);
-        homeIcon5 = (ImageButton)getActivity().findViewById(R.id.homeIcon5);
-        homeIcon6 = (ImageButton)getActivity().findViewById(R.id.homeIcon6);
-        homeIcon7 = (ImageButton)getActivity().findViewById(R.id.homeIcon7);
+
 
 
         homeIconList.add(homeIcon0);
         homeIconList.add(homeIcon1);
         homeIconList.add(homeIcon2);
         homeIconList.add(homeIcon3);
-        homeIconList.add(homeIcon4);
-        homeIconList.add(homeIcon5);
-        homeIconList.add(homeIcon6);
-        homeIconList.add(homeIcon7);
+
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             mHomeScrollView.setOnScrollChangeListener(new ScrollView.OnScrollChangeListener(){
@@ -202,23 +196,22 @@ public class home extends Fragment {
 
 
             ArrayList<HouseInfo> list=new ArrayList<>();
-            list.add(new HouseInfo("房源 1房源 1房源 1房源 1房源 1房源 1房源 1房源 1房源 1房源 1房源 1房源 1房源 1房源 1房源 1房源 1房源 1房源 1房源 1房源 1","http://utility.oss-cn-shanghai.aliyuncs.com/tengrun/dev/img/sample_rooms/room_1.jpg"));
-            list.add(new HouseInfo("房源 2","http://utility.oss-cn-shanghai.aliyuncs.com/tengrun/dev/img/sample_rooms/room_2.jpg"));
-            list.add(new HouseInfo("房源 3","http://utility.oss-cn-shanghai.aliyuncs.com/tengrun/dev/img/sample_rooms/room_3.jpg"));
-            list.add(new HouseInfo("房源 4","http://utility.oss-cn-shanghai.aliyuncs.com/tengrun/dev/img/sample_rooms/room_4.jpg"));
-            list.add(new HouseInfo("房源 5","http://utility.oss-cn-shanghai.aliyuncs.com/tengrun/dev/img/sample_rooms/room_5.jpg"));
-            list.add(new HouseInfo("房源 6","http://utility.oss-cn-shanghai.aliyuncs.com/tengrun/dev/img/sample_rooms/room_6.jpg"));
-            list.add(new HouseInfo("房源 7","http://utility.oss-cn-shanghai.aliyuncs.com/tengrun/dev/img/sample_rooms/room_7.jpg"));
-            list.add(new HouseInfo("房源 8","http://utility.oss-cn-shanghai.aliyuncs.com/tengrun/dev/img/sample_rooms/room_8.jpg"));
+            list.add(new HouseInfo("房源 1","http://utility.oss-cn-shanghai.aliyuncs.com/tengrun/dev/img/sample_rooms/room_1.jpg",1));
+            list.add(new HouseInfo("房源 2","http://utility.oss-cn-shanghai.aliyuncs.com/tengrun/dev/img/sample_rooms/room_2.jpg",2));
+            list.add(new HouseInfo("房源 3","http://utility.oss-cn-shanghai.aliyuncs.com/tengrun/dev/img/sample_rooms/room_3.jpg",3));
+            list.add(new HouseInfo("房源 4","http://utility.oss-cn-shanghai.aliyuncs.com/tengrun/dev/img/sample_rooms/room_4.jpg",4));
+            list.add(new HouseInfo("房源 5","http://utility.oss-cn-shanghai.aliyuncs.com/tengrun/dev/img/sample_rooms/room_5.jpg",5));
+            list.add(new HouseInfo("房源 6","http://utility.oss-cn-shanghai.aliyuncs.com/tengrun/dev/img/sample_rooms/room_6.jpg",6));
+            list.add(new HouseInfo("房源 7","http://utility.oss-cn-shanghai.aliyuncs.com/tengrun/dev/img/sample_rooms/room_7.jpg",7));
+            list.add(new HouseInfo("房源 8","http://utility.oss-cn-shanghai.aliyuncs.com/tengrun/dev/img/sample_rooms/room_8.jpg",8));
             for (int i = 9; i < 100; i++) {
-                list.add(new HouseInfo("房源 "+String.valueOf(i),"http://utility.oss-cn-shanghai.aliyuncs.com/tengrun/dev/img/sample_rooms/room_"+String.valueOf(new Random().nextInt(8)+1)+".jpg"));
-
+                int random = new Random().nextInt(8)+1;
+                list.add(new HouseInfo("房源 "+String.valueOf(i),"http://utility.oss-cn-shanghai.aliyuncs.com/tengrun/dev/img/sample_rooms/room_"+String.valueOf(random)+".jpg",random));
             }
-            mHomeInfoListAdapter = new HomeInfoRecyclerAdapter(getActivity(),list,0);
 
+            mHomeInfoListAdapter = new HomeInfoRecyclerAdapter(getActivity(),list,0);
             RecyclerView RV=(RecyclerView)getActivity().findViewById(R.id.homeinfo_recyclerView);
             RV.setLayoutManager(new LinearLayoutManager(getContext()));
-
             RV.setAdapter(mHomeInfoListAdapter);
             RV.setNestedScrollingEnabled(false);
             mHomeScrollView.scrollTo(0,0);

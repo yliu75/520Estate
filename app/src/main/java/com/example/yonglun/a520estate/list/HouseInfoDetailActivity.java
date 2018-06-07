@@ -42,8 +42,8 @@ public class HouseInfoDetailActivity extends SwipeBackActivity {
     private ImageView mMap;
     private TextView mPosition;
     private Toolbar mToolBar;
-    private Button mBackButton;
-    private Button mChooseButton;
+    //private Button mBackButton;
+    //private Button mChooseButton;
     private Activity mAct;
     private SwipeBackLayout mSwipeBackLayout;
     //private Context mContext;
@@ -58,7 +58,8 @@ public class HouseInfoDetailActivity extends SwipeBackActivity {
         mMap = (ImageView) findViewById(R.id.map);
 //        mPosition = (TextView) findViewById(R.id.position);
         mToolBar = (Toolbar) findViewById(R.id.toolbar);
-        mChooseButton = (Button) findViewById(R.id.choose_btn);
+        //mChooseButton = (Button) findViewById(R.id.choose_btn);
+        /*
         mChooseButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(final View v) {
@@ -75,7 +76,7 @@ public class HouseInfoDetailActivity extends SwipeBackActivity {
                         .show();
             }
         });
-
+        */
         //mBackButton = (Button) findViewById(R.id.back_button);
         mAct = this;
 
