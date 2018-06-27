@@ -11,8 +11,10 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.yonglun.a520estate.R;
+import com.example.yonglun.a520estate.Utility.Globals;
 import com.squareup.picasso.MemoryPolicy;
 import com.squareup.picasso.Picasso;
 
@@ -52,6 +54,14 @@ public class DetailCarouselFragment extends Fragment {
 
         return fragment;
     }
+    public static DetailCarouselFragment create(String url) {
+        DetailCarouselFragment fragment = new DetailCarouselFragment();
+        Bundle args = new Bundle();
+        args.putString(ARG_PARAM1, url);
+        fragment.setArguments(args);
+
+        return fragment;
+    }
 
     public DetailCarouselFragment() {
         // Required empty public constructor
@@ -79,7 +89,7 @@ public class DetailCarouselFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
+            //mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
             pageNum=getArguments().getInt(ARG_PAGE);
         }
@@ -101,7 +111,12 @@ public class DetailCarouselFragment extends Fragment {
             mParam2 = getArguments().getString(ARG_PARAM2);
             pageNum=getArguments().getInt(ARG_PAGE);
         }
-        Picasso.with(getContext()).load("https://dummyimage.com/1600x1200/000/fff.png&text="+String.valueOf(pageNum+1))
+        //Toast.makeText(getContext(), Globals.screenWidth, Toast.LENGTH_SHORT).show();
+
+        int width=getActivity().getWindowManager().getDefaultDisplay().getWidth();
+        Picasso.with(getContext()).load(Globals.imagePrefix+mParam1)
+                .resize(width,width/4*3)
+                .centerCrop()
                 .error(R.drawable.placeholder)
                 .memoryPolicy(MemoryPolicy.NO_CACHE)
                 .placeholder(R.drawable.placeholder)

@@ -19,5 +19,7 @@
     <string name="examplePrice">2100元/月</string>
     <string name="exampleLarge">70-100平米</string>
     <string name="buycontact">购买联系人信息</string>
+    <string name="title_activity_list">ListActivity</string>
+    <string name="title_activity_search">SearchActivity</string>
 
 </resources>

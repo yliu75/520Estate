@@ -80,10 +80,10 @@ public class HomeInfoRecyclerAdapter extends RecyclerView.Adapter<HomeInfoRecycl
         final HouseInfo info = houseInfoList.get(position);
         HomeInfoRecyclerAdapter.InfoHolder.textView.setText(info.getTitle());
         HomeInfoRecyclerAdapter.InfoHolder.position=position;
-        HomeInfoRecyclerAdapter.InfoHolder.mPrice.setText(String.valueOf(new Random().nextInt(13)+10)+"00元/月");
-        HomeInfoRecyclerAdapter.InfoHolder.mArea.setText("常州-"+ HomeInfoRecyclerAdapter.Area.randomArea().toString());
+        HomeInfoRecyclerAdapter.InfoHolder.mPrice.setText(info.price>10000?info.price/10000+"万元":Math.round(info.price)+"元"+(info.rentOrSale?"/月":""));
+        HomeInfoRecyclerAdapter.InfoHolder.mArea.setText(info.city+"-"+ info.district);
         int lower = new Random().nextInt(12)+5;
-        HomeInfoRecyclerAdapter.InfoHolder.mAcreage.setText(lower+"0-"+String.valueOf(lower+2)+"0平米");
+        HomeInfoRecyclerAdapter.InfoHolder.mAcreage.setText(info.size+"平米");
 
         if (!TextUtils.isEmpty(info.getThumbnail())) {
             Picasso.with(mContext).load(info.getThumbnail())
@@ -102,6 +102,7 @@ public class HomeInfoRecyclerAdapter extends RecyclerView.Adapter<HomeInfoRecycl
                     Intent intent = new Intent(mContext,HouseInfoDetailActivity.class);
                     intent.putExtra("position",position);
                     intent.putExtra("header",info.getThumbnail());
+                    intent.setFlags(houseInfoList.get(position).id);
                     ((Activity)mContext).startActivityForResult(intent,1);
                 }else{
                     if (mParameter==1){

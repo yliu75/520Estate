@@ -11,6 +11,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.yonglun.a520estate.R;
+import com.example.yonglun.a520estate.Utility.Globals;
 import com.example.yonglun.a520estate.Utility.MapActivity;
 
 import org.w3c.dom.Text;
@@ -30,7 +31,6 @@ public class tab3 extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-
     }
 
     @Override
@@ -39,11 +39,16 @@ public class tab3 extends Fragment {
         ViewGroup rootView=(ViewGroup)inflater.inflate(R.layout.fragment_tab3, container, false);
 
 //        mAvatar=(ImageView)rootView.findViewById(R.id.profile_avatar);
-//        mUsernameTV=(TextView)rootView.findViewById(R.id.profile_username_textview);
+        mUsernameTV=(TextView)rootView.findViewById(R.id.profile_username_textview);
 //        mCreditTV=(TextView)rootView.findViewById(R.id.profile_credits_textview);
 
+        if (Globals.isLogged) {
+            mUsernameTV.setText(Globals.username);
+        } else {
+            mUsernameTV.setText("登录/注册");
+        }
 
-        return rootView;
+            return rootView;
     }
 
     @Override

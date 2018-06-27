@@ -9,6 +9,7 @@ import android.content.Intent;
 import android.graphics.drawable.TransitionDrawable;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.annotation.RequiresApi;
@@ -41,11 +42,16 @@ import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.autonavi.ae.gmap.gesture.EAMapPlatformGestureInfo;
 import com.example.yonglun.a520estate.R;
+import com.example.yonglun.a520estate.Utility.Globals;
 import com.example.yonglun.a520estate.list.HouseDetailContactActivity;
 import com.example.yonglun.a520estate.list.HouseInfoDetailActivity;
 import com.example.yonglun.a520estate.list.RecyclerAdapter;
 import com.example.yonglun.a520estate.models.HouseInfo;
 import com.example.yonglun.a520estate.profile.ContactListActivity;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
@@ -86,6 +92,8 @@ public class home extends Fragment {
     private PagerAdapter mPagerAdapter;
     private HomeInfoRecyclerAdapter mHomeInfoListAdapter;
     private ScrollView mHomeScrollView;
+    private TextView accessTokenTV;
+    private JSONArray homeJson;
 
     public static home newInstance() {
         home fragment = new home();
@@ -115,6 +123,7 @@ public class home extends Fragment {
     @SuppressLint("ClickableViewAccessibility")
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
+
         super.onViewCreated(view, savedInstanceState);
         mAct=getActivity();
         homeIconList=new ArrayList<>();
@@ -159,6 +168,11 @@ public class home extends Fragment {
                     if (event.getAction() == MotionEvent.ACTION_DOWN){
                         item.setBackgroundColor(getColor(mAct,R.color.lightGrey));
                         touchGreyFlag=true;
+                        Intent intent = new Intent(getContext(),ListActivity.class);
+                        intent.addFlags(homeIconList.indexOf(item));
+
+
+                        getActivity().startActivityForResult(intent,1);
 //                        touchGreyX=event.getX();
 //                        touchGreyY=event.getY();
                     }
@@ -194,26 +208,72 @@ public class home extends Fragment {
             });
 
 
+            accessTokenTV = (TextView)getActivity().findViewById(R.id.accessToken);
+            RequestQueue queue = Volley.newRequestQueue(getContext());
+            String url = Globals.homeList;
 
-            ArrayList<HouseInfo> list=new ArrayList<>();
-            list.add(new HouseInfo("房源 1","http://utility.oss-cn-shanghai.aliyuncs.com/tengrun/dev/img/sample_rooms/room_1.jpg",1));
-            list.add(new HouseInfo("房源 2","http://utility.oss-cn-shanghai.aliyuncs.com/tengrun/dev/img/sample_rooms/room_2.jpg",2));
-            list.add(new HouseInfo("房源 3","http://utility.oss-cn-shanghai.aliyuncs.com/tengrun/dev/img/sample_rooms/room_3.jpg",3));
-            list.add(new HouseInfo("房源 4","http://utility.oss-cn-shanghai.aliyuncs.com/tengrun/dev/img/sample_rooms/room_4.jpg",4));
-            list.add(new HouseInfo("房源 5","http://utility.oss-cn-shanghai.aliyuncs.com/tengrun/dev/img/sample_rooms/room_5.jpg",5));
-            list.add(new HouseInfo("房源 6","http://utility.oss-cn-shanghai.aliyuncs.com/tengrun/dev/img/sample_rooms/room_6.jpg",6));
-            list.add(new HouseInfo("房源 7","http://utility.oss-cn-shanghai.aliyuncs.com/tengrun/dev/img/sample_rooms/room_7.jpg",7));
-            list.add(new HouseInfo("房源 8","http://utility.oss-cn-shanghai.aliyuncs.com/tengrun/dev/img/sample_rooms/room_8.jpg",8));
-            for (int i = 9; i < 100; i++) {
-                int random = new Random().nextInt(8)+1;
-                list.add(new HouseInfo("房源 "+String.valueOf(i),"http://utility.oss-cn-shanghai.aliyuncs.com/tengrun/dev/img/sample_rooms/room_"+String.valueOf(random)+".jpg",random));
+
+//             Request a string response from the provided URL.
+        StringRequest stringRequest = new StringRequest(Request.Method.POST, url,
+                new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+                        // Display the first 500 characters of the response string.
+                        //accessTokenTV.setText("Response is: "+ response);
+                        try {
+                            //String a="{\"ID\":4,\"Title\":\"红梅公园边三室两厅两卫132平米\",\"Country\":\"中国\",\"Province\":\"江苏\",\"City\":\"常州\",\"District\":\"天宁区\",\"Area\":null,\"ZipCode\":\"213000\",\"AddressTxt\":\"红梅新村32幢甲单元401\",\"Status\":0,\"Price\":2500.00,\"Period\":12,\"Cover\":\"1\",\"Contacter\":null,\"Contact\":null,\"Photos\":[3,4,5],\"PhotoStr\":\"3,4,5\"}";
+                            ArrayList<HouseInfo> list=new ArrayList<>();
+
+                            homeJson = new JSONArray(response);
+                            String res = "";
+                            for (int i=0;i<homeJson.length();i++){
+                                JSONObject item = homeJson.getJSONObject(i);
+                                list.add(new HouseInfo(item));
+                            }
+                            //accessTokenTV.setText(res);
+
+
+                            mHomeInfoListAdapter = new HomeInfoRecyclerAdapter(getActivity(),list,0);
+                            RecyclerView RV=(RecyclerView)getActivity().findViewById(R.id.homeinfo_recyclerView);
+                            RV.setLayoutManager(new LinearLayoutManager(getContext()));
+                            RV.setAdapter(mHomeInfoListAdapter);
+                            RV.setNestedScrollingEnabled(false);
+
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+
+
+
+                    }
+                }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                accessTokenTV.setText("That didn't work!");
+            }
+        }){
+            @Override
+            public byte[] getBody() throws AuthFailureError {
+                String httpPostBody="";
+                // usually you'd have a field with some values you'd want to escape, you need to do it yourself if overriding getBody. here's how you do it
+                try {
+                    httpPostBody=httpPostBody+"&randomFieldFilledWithAwkwardCharacters="+ URLEncoder.encode("{{%stuffToBe Escaped/","UTF-8");
+                } catch (UnsupportedEncodingException exception) {
+                    Log.e("ERROR", "exception", exception);
+                    // return null and don't pass any POST string if you encounter encoding error
+                    return null;
+                }
+                return httpPostBody.getBytes();
             }
 
-            mHomeInfoListAdapter = new HomeInfoRecyclerAdapter(getActivity(),list,0);
-            RecyclerView RV=(RecyclerView)getActivity().findViewById(R.id.homeinfo_recyclerView);
-            RV.setLayoutManager(new LinearLayoutManager(getContext()));
-            RV.setAdapter(mHomeInfoListAdapter);
-            RV.setNestedScrollingEnabled(false);
+        };
+
+//             Add the request to the RequestQueue.
+            queue.add(stringRequest);
+
+
+
+
             mHomeScrollView.scrollTo(0,0);
 
         }

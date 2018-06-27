@@ -29,6 +29,7 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Random;
 
+import static android.support.v4.app.ActivityCompat.startActivityForResult;
 import static android.text.Html.fromHtml;
 
 /**
@@ -82,10 +83,11 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.InfoHo
         final HouseInfo info = houseInfoList.get(position);
         InfoHolder.textView.setText(info.getTitle());
         InfoHolder.position=position;
-        InfoHolder.mPrice.setText(String.valueOf(new Random().nextInt(13)+10)+"00元/月");
+        Double price = info.price;
+        InfoHolder.mPrice.setText((price>10000?Math.round(price/1000)/10+"万元":price+"元")+(info.rentOrSale?"/月":""));
         InfoHolder.mArea.setText("常州-"+Area.randomArea().toString());
         int lower = new Random().nextInt(12)+5;
-        InfoHolder.mAcreage.setText(lower+"0-"+String.valueOf(lower+2)+"0平米");
+        InfoHolder.mAcreage.setText(info.size+"平米");
 
         if (!TextUtils.isEmpty(info.getThumbnail())) {
             Picasso.with(mContext).load(info.getThumbnail())
@@ -104,7 +106,9 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.InfoHo
                     Intent intent = new Intent(mContext,HouseInfoDetailActivity.class);
                     intent.putExtra("position",position);
                     intent.putExtra("header",info.getThumbnail());
+                    intent.setFlags(houseInfoList.get(position).id);
                     ((Activity)mContext).startActivityForResult(intent,1);
+
                 }else{
                     if (mParameter==1){
                         Intent intent = new Intent(mContext,HouseDetailContactActivity.class);
